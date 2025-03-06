@@ -7,7 +7,7 @@ import { z } from "zod";
  * If you wanted to add stuff like a debrid apikey, for instance. You would add it here.
  */
 export const ConfigSchema = z.object({
-  variable1: z.string().min(1, { message: "Variable 1 is required" }),
+  omdbApiKey: z.string().min(1, { message: "OMDB API key is required" }),
 });
 export type Config = z.infer<typeof ConfigSchema>;
 

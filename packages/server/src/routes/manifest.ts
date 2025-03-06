@@ -26,21 +26,15 @@ export const manifestRouter: Router = Router({ mergeParams: true }).get(
 
     // if we have a configuration, make changes as necessary
     if (conf) {
-      const { name } = addonManifest;
       manifest = createManifest({
         ...addonManifest,
-        name: `${name} - configured with ${conf.variable1}`,
-        types: ["movie", "series", "channel"],
+        name: "Stremio Addon Boilerplate - OMDB example",
+        description: "A Stremio addon that uses OMDB API to fetch movie and series data.",
+        types: ["movie", "series"],
         logo: `${serverEnv.BASE_URL}/logo.png`,
-        resources: ["catalog", "meta", "stream", "subtitles"],
-        catalogs: [
-          {
-            id: "catalog1",
-            type: "movie",
-            name: "Movies",
-            extra: [{ name: "genre", options: ["Action", "Comedy"] }],
-          },
-        ],
+        resources: ["meta"],
+        catalogs: [],
+        idPrefixes: ["tt"]
       });
     }
 

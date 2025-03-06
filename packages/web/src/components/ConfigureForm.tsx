@@ -51,7 +51,7 @@ export default function ConfigureForm() {
   } = useForm<Config>({
     resolver: zodResolver(ConfigSchema),
     defaultValues: {
-      variable1: "",
+      omdbApiKey: "",
     },
     mode: "onChange",
   });
@@ -69,14 +69,14 @@ export default function ConfigureForm() {
     <form onSubmit={onSubmit}>
       <div className="flex flex-col gap-1">
         <div className="flex flex-col gap-2">
-          <label htmlFor="variable1">
-            Variable 1
-            <span className="text-red-500">{errors.variable1?.message}</span>
+          <label htmlFor="omdbApiKey">
+            OMDB API Key
+            <span className="text-red-500">{errors.omdbApiKey?.message}</span>
           </label>
 
           <input
-            type="text"
-            {...register("variable1")}
+            type="password"
+            {...register("omdbApiKey")}
             className="border-2 border-gray-300 rounded-md p-2"
           />
         </div>
