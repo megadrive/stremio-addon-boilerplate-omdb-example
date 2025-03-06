@@ -2,7 +2,7 @@ import { expect, test } from "vitest";
 import { config, type Config } from "./config";
 
 const data: Config = {
-  variable1: "abcdef",
+  omdbApiKey: "abcdef",
 };
 
 test("config encodes to a string", () => {

@@ -6,7 +6,7 @@ import { Config } from "@stremio-addon/config";
 
 const OMDBAPIError = z.object({
   Response: z.literal("False"),
-  Error: z.string()
+  Error: z.string(),
 });
 
 const OMDBResponse = z.object({
@@ -24,10 +24,12 @@ const OMDBResponse = z.object({
   Country: z.string(),
   Awards: z.string(),
   Poster: z.string(),
-  Ratings: z.array(z.object({
-    Source: z.string(),
-    Value: z.string()
-  })),
+  Ratings: z.array(
+    z.object({
+      Source: z.string(),
+      Value: z.string(),
+    })
+  ),
   Metascore: z.string(),
   imdbRating: z.string(),
   imdbVotes: z.string(),
@@ -38,8 +40,10 @@ const OMDBResponse = z.object({
 
 const getData = async (imdbId: string, apiKey: string) => {
   try {
-    const res = await fetch(`http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`);
-    if(!res.ok) {
+    const res = await fetch(
+      `http://www.omdbapi.com/?apikey=${apiKey}&i=${imdbId}`
+    );
+    if (!res.ok) {
       throw new Error("Failed to fetch data");
     }
 
@@ -55,30 +59,28 @@ const getData = async (imdbId: string, apiKey: string) => {
     }
 
     return result.data;
-  } catch (error) {
-
-  }
-}
+  } catch (error) {}
+};
 
 // should match: /:config/meta/:type/:id/:extras?.json
 // ex: /configexample/meta/movie/123456.json
 export const metaRouter: Router = Router({ mergeParams: true }).get(
   "/:type/:id.json",
   async (req: Request, res: TypedJsonResponse<{ meta: MetaDetail | {} }>) => {
-    const {type } = req.params;
+    const { type } = req.params;
 
     try {
       const config = res.locals.config as Config | undefined;
 
-      if(!config) {
-        res.status(500).json({meta: {}})
+      if (!config) {
+        res.status(500).json({ meta: {} });
         return;
       }
 
       const data = await getData(req.params.id, config.omdbApiKey);
 
-      if(!data) {
-        res.status(500).json({meta: {}});
+      if (!data) {
+        res.status(500).json({ meta: {} });
         return;
       }
 
@@ -103,15 +105,14 @@ export const metaRouter: Router = Router({ mergeParams: true }).get(
         rated: data.Rated,
         released: data.Released,
         runtime: data.Runtime,
-        metascore: data.Metascore
-      }
+        metascore: data.Metascore,
+      };
 
-       res.json({ meta });
-       return
+      res.json({ meta });
+      return;
     } catch (error) {
       console.error(error);
     }
-
 
     res.status(500).json({ meta: {} });
   }

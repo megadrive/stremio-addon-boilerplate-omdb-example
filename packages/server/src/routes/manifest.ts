@@ -29,12 +29,13 @@ export const manifestRouter: Router = Router({ mergeParams: true }).get(
       manifest = createManifest({
         ...addonManifest,
         name: "Stremio Addon Boilerplate - OMDB example",
-        description: "A Stremio addon that uses OMDB API to fetch movie and series data.",
+        description:
+          "A Stremio addon that uses OMDB API to fetch movie and series data.",
         types: ["movie", "series"],
         logo: `${serverEnv.BASE_URL}/logo.png`,
         resources: ["meta"],
         catalogs: [],
-        idPrefixes: ["tt"]
+        idPrefixes: ["tt"],
       });
     }
 
